@@ -4,6 +4,14 @@ const express = require("express");
 // of the express application
 const app = express();
 
+
+app.set("view engine","ejs");
+//Middleware
+//logger
+//when using the 'morgon' middleware, call it with a string
+//that describes the formatting of the logs
+const logger = require("morgan");
+
 //Url: Uniform Resource Locator
 //URL http://localhost:3000/hello_world
 //scheme| address |Port |path
@@ -14,6 +22,18 @@ const app = express();
 //the location of the server hosting the website
 //The "path" identifies a specific web page
  
+app.get("/",(request,response) => {
+    //response.render(<ejs-file-path)
+    //render a template located in "views",<ejs-file-path>
+    //when writing file path,you can omit the extension
+    
+    //To call below,the file at ".views/welcome.ejs" is render
+    //as HTML  and is sent as the body of the HTTP response
+    //by our express server. Just like "response.send(<data>)",
+    //response.render(<file-path) terminates response by sending
+    //to the client
+    response.render("welcome");
+})
 
 //Routers
 //a route is a function that creates a response
@@ -34,7 +54,7 @@ app.get("/hello_world",(request,response) => {
     //The method "send" of "response" take a string
     //and adds it to the response body,then terminates the response
     //sending it to client
-    response.send('Hello world');
+    response.send('Good Bye!,World');
 });
 
 const PORT = 3000;
