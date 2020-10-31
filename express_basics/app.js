@@ -1,4 +1,4 @@
-const { response } = require("express");
+const { response, request } = require("express");
 const express = require("express");
 // Requiring express package returns a function that creates an instance 
 // of the express application
@@ -56,7 +56,39 @@ app.get("/hello_world",(request,response) => {
     //sending it to client
     response.send('Good Bye!,World');
 });
+//http://localhost:3000/thank_you?fullName=Chandanpreet&favouriteColor=Red&message=JavaScript
+//after ? is our query(search)
 
+//The query in the url is a way to encode data as key-value
+//pairs in the URL itself. It is used by forms to store data from its input
+//This is called URL encoding
+
+//The encoding format is as follows:
+//?key_1=value_1&key_2= value_2
+//Express takes a query from URL and converts it into 
+//an object as follows
+//{key_1 : Value_1,key_2 : Value_2,key_3 : Value_3}
+app.get('/thank_you',(request,response)=> {
+    //request.query is a property that holds an object
+    //representation of Url query
+    const fullName = request.query.fullName;
+    const favouriteColor = request.query.favouriteColor;
+    const message = request.query.message;
+    //below line is same as above lines
+    //const {fullName,favouriteColor,message} = request.query
+    console.log("requestQuery",request.query)
+    response.render("thankYou",{
+        fullName: fullName,
+        favouriteColor : favouriteColor,
+        message:message,
+    });
+})
+
+
+app.get('/contact_us',(request,response)=>{
+    console.log('url query',request.query)
+   response.render("contactUs")
+})
 const PORT = 3000;
 const ADDRESS = "127.0.0.1";
 
