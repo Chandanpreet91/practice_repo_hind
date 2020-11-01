@@ -3,6 +3,7 @@ const express = require("express");
 // Requiring express package returns a function that creates an instance 
 // of the express application
 const app = express();
+const path = require('path');
 
 
 app.set("view engine","ejs");
@@ -11,6 +12,24 @@ app.set("view engine","ejs");
 //when using the 'morgon' middleware, call it with a string
 //that describes the formatting of the logs
 const logger = require("morgan");
+app.use(logger('dev'));
+
+
+//static Assets
+//use path.join to combine string arguments into directory path
+//for example
+//path.join('/','home','users','hindreen');
+
+//"_dirname" is a global variable available anywhere in any application
+//that is run by node that runs the full directory path beginning from
+//root('i.e. '/') to the location of the file where "__dirname" is used.
+console.log("__dirname",__dirname);
+//the static assets middleware will take all the files and directories
+//at a specified path and the specify them publically with their own URL.
+app.use(express.static(path.join(__dirname ,'public')));
+//The live above connects oue public directory to express
+//so that it can serve the browser those images,css files,
+//browser side js,sound, video etc.
 
 //Url: Uniform Resource Locator
 //URL http://localhost:3000/hello_world
